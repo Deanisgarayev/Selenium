@@ -3,8 +3,12 @@ from time import sleep
 from selenium.webdriver.common.by import By
 
 file = open('log.txt','w')
-driver = webdriver.Chrome()
+# driver = webdriver.Chrome()
 
+option = webdriver.ChromeOptions()
+option.add_experimental_option("detach",True)
+# option.add_argument("--headless")
+driver = webdriver.Chrome(options=option)
 def set_up():
     driver.get('http://www.saucedemo.com/')
     driver.maximize_window()
@@ -20,7 +24,7 @@ def login():
     name_pass.send_keys(password)
     file.write("Success write password\n")
 
-    sleep(1)
+    # sleep(1)
 
     login_button = driver.find_element(By.XPATH,'//input[@id="login-button"]')
     login_button.click()
@@ -47,7 +51,7 @@ test_login_redirect()
 test_context_after_login_is_correct()
 
 file.close()
-sleep(5)
+# sleep(5)
 
 # Поиск локатора по индексу //div[@class="form_group"])[1]
 # Поиск локатора по тексту //h4[contains(text(), 'Password for all')] or ‘//h4[text()='Password for all users:']
