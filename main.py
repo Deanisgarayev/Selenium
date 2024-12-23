@@ -9,9 +9,26 @@ option = webdriver.ChromeOptions()
 option.add_experimental_option("detach",True)
 # option.add_argument("--headless")
 driver = webdriver.Chrome(options=option)
+
 def set_up():
     driver.get('http://www.saucedemo.com/')
     driver.maximize_window()
+
+def fake_login():
+    user_name = driver.find_element(By.XPATH, '//input[@id="user-name"]')
+    login = "standard_user"
+    user_name.send_keys(login)
+    file.write("Success write login\n")
+
+    name_pass = driver.find_element(By.XPATH, '//input[@id="password"]')
+    password = "secret_sauce1"
+    name_pass.send_keys(password)
+    file.write("Success write fake password\n")
+
+    login_button = driver.find_element(By.XPATH, '//input[@id="login-button"]')
+    login_button.click()
+    file.write("Success clik button\n")
+
 
 def login():
     user_name = driver.find_element(By.XPATH,'//input[@id="user-name"]')
@@ -23,8 +40,6 @@ def login():
     password = "secret_sauce"
     name_pass.send_keys(password)
     file.write("Success write password\n")
-
-    # sleep(1)
 
     login_button = driver.find_element(By.XPATH,'//input[@id="login-button"]')
     login_button.click()
@@ -44,12 +59,26 @@ def test_context_after_login_is_correct():
     assert correct_text == current_text.text,"test_context_after_login_is_correct is failed"
     file.write("test_context_after_login_is_correct is ok\n")
 
-set_up()
-login()
+def test_login_fake_label():
+    correct_text = "Epic sadface: Username and password do not match any user in this service"
+    current_text = driver.find_element(By.XPATH,'//*[@id="login_button_container"]/div/form/div[3]/h3')
 
-test_login_redirect()
-test_context_after_login_is_correct()
+    assert correct_text == current_text.text,"test_login_fake_label is failed"
+    file.write("test_login_fake_label is ok\n")
 
+def sc_real_login():
+    set_up()
+    login()
+    test_login_redirect()
+    test_context_after_login_is_correct()
+
+def sc_fake_login():
+    set_up()
+    fake_login()
+    test_login_fake_label()
+
+sc_fake_login()
+sc_real_login()
 file.close()
 # sleep(5)
 
