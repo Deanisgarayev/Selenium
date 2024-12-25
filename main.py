@@ -1,5 +1,7 @@
 from selenium import webdriver
 from time import sleep
+
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
 file = open('log.txt','w')
@@ -9,6 +11,21 @@ option = webdriver.ChromeOptions()
 option.add_experimental_option("detach",True)
 # option.add_argument("--headless")
 driver = webdriver.Chrome(options=option)
+
+def check_backspace_and_select_all():
+    set_up()
+    user_name = driver.find_element(By.XPATH, '//input[@id="user-name"]')
+    login = "standard_user"
+    user_name.send_keys(login)
+    sleep(2)
+    user_name.send_keys(Keys.BACKSPACE)
+    file.write("Success backspace\n")
+    user_name.send_keys(Keys.CONTROL + 'a')
+    file.write("Success control a\n")
+
+def refresh_page():
+    driver.refresh()
+    file.write("refreshed\n")
 
 def set_up():
     driver.get('http://www.saucedemo.com/')
@@ -20,9 +37,9 @@ def fake_login():
     user_name.send_keys(login)
     file.write("Success write login\n")
 
-    name_pass = driver.find_element(By.XPATH, '//input[@id="password"]')
+    user_pass = driver.find_element(By.XPATH, '//input[@id="password"]')
     password = "secret_sauce1"
-    name_pass.send_keys(password)
+    user_pass.send_keys(password)
     file.write("Success write fake password\n")
 
     login_button = driver.find_element(By.XPATH, '//input[@id="login-button"]')
@@ -36,14 +53,28 @@ def login():
     user_name.send_keys(login)
     file.write("Success write login\n")
 
-    name_pass = driver.find_element(By.XPATH,'//input[@id="password"]')
+    user_pass = driver.find_element(By.XPATH,'//input[@id="password"]')
     password = "secret_sauce"
-    name_pass.send_keys(password)
+    user_pass.send_keys(password)
     file.write("Success write password\n")
 
     login_button = driver.find_element(By.XPATH,'//input[@id="login-button"]')
     login_button.click()
     file.write("Success clik button\n")
+
+def login_with_enter():
+    user_name = driver.find_element(By.XPATH,'//input[@id="user-name"]')
+    login = "standard_user"
+    user_name.send_keys(login)
+    file.write("Success write login\n")
+
+    user_pass = driver.find_element(By.XPATH,'//input[@id="password"]')
+    password = "secret_sauce"
+    user_pass.send_keys(password)
+    file.write("Success write password\n")
+
+    user_pass.send_keys(Keys.ENTER)
+    file.write("Success enter login\n")
 
 def test_login_redirect():
     correct_url="https://www.saucedemo.com/inventory.html"
@@ -72,15 +103,24 @@ def sc_real_login():
     test_login_redirect()
     test_context_after_login_is_correct()
 
+def sc_real_login_with_enter():
+    set_up()
+    login_with_enter()
+    test_login_redirect()
+    test_context_after_login_is_correct()
+
 def sc_fake_login():
     set_up()
     fake_login()
     test_login_fake_label()
 
+# check_backspace_and_select_all()
 sc_fake_login()
-sc_real_login()
+# sc_real_login()
+sc_real_login_with_enter()
+refresh_page()
 file.close()
-# sleep(5)
+
 
 # Поиск локатора по индексу //div[@class="form_group"])[1]
 # Поиск локатора по тексту //h4[contains(text(), 'Password for all')] or ‘//h4[text()='Password for all users:']
