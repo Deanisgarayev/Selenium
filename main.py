@@ -1,6 +1,8 @@
+from datetime import datetime
+
 from selenium import webdriver
 from time import sleep
-
+import datetime
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
@@ -87,6 +89,9 @@ def test_context_after_login_is_correct():
     correct_text = "Products"
     current_text = driver.find_element(By.XPATH, '//*[@id="header_container"]/div[2]/span')
 
+    driver.save_screenshot(f"sc_real_login\\screenshot_test_context_after_login_is_correct_"
+                           f"{datetime.datetime.now().strftime("%H.%M.%S-%Y.%m.%d")}.png")
+
     assert correct_text == current_text.text,"test_context_after_login_is_correct is failed"
     file.write("test_context_after_login_is_correct is ok\n")
 
@@ -115,10 +120,10 @@ def sc_fake_login():
     test_login_fake_label()
 
 # check_backspace_and_select_all()
-sc_fake_login()
-# sc_real_login()
-sc_real_login_with_enter()
-refresh_page()
+# sc_fake_login()
+sc_real_login()
+# sc_real_login_with_enter()
+# refresh_page()
 file.close()
 
 
