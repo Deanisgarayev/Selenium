@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium import webdriver
 from time import sleep
 import datetime
@@ -13,6 +13,16 @@ option = webdriver.ChromeOptions()
 option.add_experimental_option("detach",True)
 # option.add_argument("--headless")
 driver = webdriver.Chrome(options=option)
+
+def move_to_element():
+    action = ActionChains(driver)
+    element = driver.find_element(By.XPATH,'//*[@id="page_wrapper"]/footer/div')
+    action.move_to_element(element).perform()
+
+
+def scroll():
+    driver.execute_script("window, scrollTo(0,300);")
+
 
 def check_backspace_and_select_all():
     set_up()
@@ -37,6 +47,7 @@ def fake_login():
     user_name = driver.find_element(By.XPATH, '//input[@id="user-name"]')
     login = "standard_user"
     user_name.send_keys(login)
+    # user_name.clear()
     file.write("Success write login\n")
 
     user_pass = driver.find_element(By.XPATH, '//input[@id="password"]')
@@ -47,6 +58,14 @@ def fake_login():
     login_button = driver.find_element(By.XPATH, '//input[@id="login-button"]')
     login_button.click()
     file.write("Success clik button\n")
+
+def logout():
+    menu_button = driver.find_element(By.XPATH,'//*[@id="react-burger-menu-btn"]')
+    menu_button.click()
+    sleep(1)
+    logout_button = driver.find_element(By.XPATH,'//*[@id="logout_sidebar_link"]')
+    logout_button.click()
+    file.write("Success logout\n")
 
 
 def login():
@@ -102,6 +121,20 @@ def test_login_fake_label():
     assert correct_text == current_text.text,"test_login_fake_label is failed"
     file.write("test_login_fake_label is ok\n")
 
+def test_logout_redirect():
+    correct_url="https://www.saucedemo.com/"
+    get_url=driver.current_url
+
+    assert correct_url == get_url,"test_logout_redirect is failed"
+    file.write("test_logout_redirect is ok\n")
+
+def test_context_after_logout_is_correct():
+    correct_text = "Accepted usernames are:"
+    current_text = driver.find_element(By.XPATH, '//*[@id="login_credentials"]/h4')
+
+    assert correct_text == current_text.text,"test_context_after_logout_is_correct is failed"
+    file.write("test_context_after_logout_is_correct is ok\n")
+
 def sc_real_login():
     set_up()
     login()
@@ -119,11 +152,19 @@ def sc_fake_login():
     fake_login()
     test_login_fake_label()
 
+def sc_logout():
+    logout()
+    test_logout_redirect()
+    test_context_after_logout_is_correct()
+
 # check_backspace_and_select_all()
 # sc_fake_login()
 sc_real_login()
 # sc_real_login_with_enter()
 # refresh_page()
+# scroll()
+# move_to_element()
+sc_logout()
 file.close()
 
 
