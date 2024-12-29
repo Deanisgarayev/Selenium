@@ -164,7 +164,7 @@ sc_real_login()
 # refresh_page()
 # scroll()
 # move_to_element()
-sc_logout()
+# sc_logout()
 file.close()
 
 
