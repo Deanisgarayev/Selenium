@@ -31,37 +31,37 @@ def login():
     user_pass.send_keys('secret_sauce')
     file.write('Success write password\n')
     s()
-    button = driver.find_element(By.XPATH,'//*[@id="login-button"]')
-    button.click()
+    login_button = driver.find_element(By.XPATH,'//*[@id="login-button"]')
+    login_button.click()
     file.write('Success login\n')
     s()
 
 def choose_goods():
     '''adds goods to cart'''
-    good1_b = driver.find_element(By.XPATH,'//*[@id="add-to-cart-sauce-labs-backpack"]')
-    good1_b.click()
+    good1_button = driver.find_element(By.XPATH,'//*[@id="add-to-cart-sauce-labs-backpack"]')
+    good1_button.click()
     file.write('Success add first good\n')
     s()
-    good2_b = driver.find_element(By.XPATH,'//*[@id="add-to-cart-sauce-labs-fleece-jacket"]')
-    good2_b.click()
+    good2_button = driver.find_element(By.XPATH,'//*[@id="add-to-cart-sauce-labs-fleece-jacket"]')
+    good2_button.click()
     file.write('Success add second good\n')
     s()
-    good3_b = driver.find_element(By.XPATH,'//*[@id="add-to-cart-test.allthethings()-t-shirt-(red)"]')
-    good3_b.click()
+    good3_button = driver.find_element(By.XPATH,'//*[@id="add-to-cart-test.allthethings()-t-shirt-(red)"]')
+    good3_button.click()
     file.write('Success add first third\n')
     s()
 
 def enter_to_the_cart():
     '''clicks to button cart'''
-    cart_b = driver.find_element(By.XPATH,'//*[@id="shopping_cart_container"]/a')
-    cart_b.click()
+    cart_button = driver.find_element(By.XPATH,'//*[@id="shopping_cart_container"]/a')
+    cart_button.click()
     file.write('Success enter_to_the_cart\n')
     s()
 
 def remove_good_in_the_cart():
     '''removes good from cart'''
-    remove_b = driver.find_element(By.XPATH, '//*[@id="remove-sauce-labs-fleece-jacket"]')
-    remove_b.click()
+    remove_button = driver.find_element(By.XPATH, '//*[@id="remove-sauce-labs-fleece-jacket"]')
+    remove_button.click()
     file.write('Success remove_good_in_the_cart\n')
     s()
 
@@ -83,22 +83,22 @@ def checkout():
     zip_or_code.send_keys('fgd')
     file.write('Success write code\n')
     s()
-    continue_b = driver.find_element(By.XPATH, '//*[@id="continue"]')
-    continue_b.click()
+    continue_button = driver.find_element(By.XPATH, '//*[@id="continue"]')
+    continue_button.click()
     file.write('Success continue\n')
     s()
 
 def finish():
     '''clicks button finish'''
-    finish_b = driver.find_element(By.XPATH,'//*[@id="finish"]')
-    finish_b.click()
+    finish_button = driver.find_element(By.XPATH,'//*[@id="finish"]')
+    finish_button.click()
     file.write('Success finish\n')
     s()
 
 def back_home():
     '''clicks button back home'''
-    back_home_b = driver.find_element(By.XPATH,'//*[@id="back-to-products"]')
-    back_home_b.click()
+    back_home_button = driver.find_element(By.XPATH,'//*[@id="back-to-products"]')
+    back_home_button.click()
     file.write('Success back home\n')
     s()
 
@@ -107,8 +107,8 @@ def logout():
     menu_b = driver.find_element(By.XPATH,'//*[@id="react-burger-menu-btn"]')
     menu_b.click()
     sleep(1)
-    logout_b = driver.find_element(By.XPATH,'//*[@id="logout_sidebar_link"]')
-    logout_b.click()
+    logout_button = driver.find_element(By.XPATH,'//*[@id="logout_sidebar_link"]')
+    logout_button.click()
     file.write('Success logout\n')
 
 
