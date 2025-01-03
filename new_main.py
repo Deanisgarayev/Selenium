@@ -1,7 +1,8 @@
+from datetime import datetime, timedelta
 from time import sleep
 
 from selenium import webdriver
-from selenium.webdriver import ActionChains
+from selenium.webdriver import Keys, ActionChains
 from selenium.webdriver.common.by import By
 
 file = open("logs.txt","w")
@@ -75,7 +76,51 @@ def check_buttons():
                                                                                           'is failed')
     file.write('context_after_click_button is ok\n')
 
+def check_date_picker():
+    driver.get('https://demoqa.com/date-picker')
+    driver.maximize_window()
+    sleep(1)
+    input_date = driver.find_element(By.XPATH,'//*[@id="datePickerMonthYearInput"]')
+    input_date.send_keys(Keys.CONTROL + 'a')
+    input_date.send_keys(Keys.DELETE)
+    sleep(1)
+    current_date = datetime.now().strftime("%d.%m.%Y")
+    input_date.send_keys(current_date)
+    input_date.send_keys(Keys.ENTER)
+    sleep(1)
+
+
+    input_date.send_keys(Keys.CONTROL + 'a')
+    input_date.send_keys(Keys.DELETE)
+    sleep(1)
+    add_days = current_date + timedelta(days=10)
+    input_date.send_keys(add_days)
+
+    input_date_and_time = driver.find_element(By.XPATH,'//*[@id="dateAndTimePickerInput"]')
+    input_date_and_time.send_keys(Keys.CONTROL + 'a')
+    input_date_and_time.send_keys(Keys.DELETE)
+    sleep(1)
+    # current_datetime = datetime.now().strftime("%d.%m.%Y-%H.%M")
+    # input_date_and_time.send_keys(current_datetime)
+    # sleep(1)
+    select_month = driver.find_element(By.XPATH,'//*[@id="dateAndTimePicker"]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[1]/div/span[1]')
+    select_month.click()
+    select_month_number_name = driver.find_element(By.XPATH,'//*[@id="dateAndTimePicker"]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[1]/div[1]/div[7]')
+    select_month_number_name.click()
+    select_year = driver.find_element(By.XPATH,'//*[@id="dateAndTimePicker"]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[2]/div/span[1]')
+    select_year.click()
+    select_year_number= driver.find_element(By.XPATH,'//*[@id="dateAndTimePicker"]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[2]/div[1]/div[11]')
+    select_year_number.click()
+    select_number= driver.find_element(By.XPATH,'//*[@id="dateAndTimePicker"]/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div[6]')
+    select_number.click()
+    select_time= driver.find_element(By.XPATH,'//*[@id="dateAndTimePicker"]/div[2]/div[2]/div/div/div[3]/div[2]/div/ul/li[46]')
+    select_time.click()
+
+
+
+
 # check_check_box()
 # check_radio_button()
-check_buttons()
+# check_buttons()
+check_date_picker()
 file.close()
