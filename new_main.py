@@ -76,6 +76,7 @@ def check_buttons():
                                                                                           'is failed')
     file.write('context_after_click_button is ok\n')
 
+# таймдельта не работает
 def check_date_picker():
     driver.get('https://demoqa.com/date-picker')
     driver.maximize_window()
@@ -90,11 +91,11 @@ def check_date_picker():
     sleep(1)
 
 
-    input_date.send_keys(Keys.CONTROL + 'a')
-    input_date.send_keys(Keys.DELETE)
-    sleep(1)
-    add_days = current_date + timedelta(days=10)
-    input_date.send_keys(add_days)
+    # input_date.send_keys(Keys.CONTROL + 'a')
+    # input_date.send_keys(Keys.DELETE)
+    # sleep(1)
+    # add_days = current_date + timedelta(days=10)
+    # input_date.send_keys(add_days)
 
     input_date_and_time = driver.find_element(By.XPATH,'//*[@id="dateAndTimePickerInput"]')
     input_date_and_time.send_keys(Keys.CONTROL + 'a')
@@ -116,11 +117,31 @@ def check_date_picker():
     select_time= driver.find_element(By.XPATH,'//*[@id="dateAndTimePicker"]/div[2]/div[2]/div/div/div[3]/div[2]/div/ul/li[46]')
     select_time.click()
 
+# ссылка не найдена
+def check_slider():
+    driver.get('https://html5css.ru/howto/howto_js_rangeslider.php')
+    driver.maximize_window()
+    sleep(1)
+    slider = driver.find_element(By.XPATH,'//*[@id="id2"]')
+    action = ActionChains(driver)
+    sleep(1)
+    action.click_and_hold(slider).move_by_offset(-500,0).release().perform()
 
-
+#Oops! This page doesn’t exist.
+def check_drop_down():
+    driver.get('https://www.lambdatest.com/selenium-ptayground/jquery-dropdown-search-demo')
+    driver.maximize_window()
+    sleep(1)
+    click_drop = driver.find_element(By.XPATH,'//*[@id="__next"]/div/section[2]/div/div/div/div[1]/div[2]/span')
+    click_drop.click()
+    click_form = driver.find_element(By.XPATH,'/html/body/span/span[1]/input')
+    click_form.send_keys('Denmark')
+    click_drop.send_keys(Keys.ENTER)
 
 # check_check_box()
 # check_radio_button()
 # check_buttons()
-check_date_picker()
+# check_date_picker()
+# check_slider()
+check_drop_down()
 file.close()

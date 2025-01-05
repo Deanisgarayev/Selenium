@@ -5,6 +5,7 @@ from time import sleep
 import datetime
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 
 file = open('log.txt','w')
 # driver = webdriver.Chrome()
@@ -13,6 +14,11 @@ option = webdriver.ChromeOptions()
 option.add_experimental_option("detach",True)
 # option.add_argument("--headless")
 driver = webdriver.Chrome(options=option)
+
+def check_drop_down():
+    select = Select(driver.find_element(By.XPATH,'//*[@id="header_container"]/div[2]/div/span/select'))
+    sleep(1)
+    select.select_by_visible_text("Price (low to high)")
 
 def move_to_element():
     action = ActionChains(driver)
@@ -165,6 +171,7 @@ sc_real_login()
 # scroll()
 # move_to_element()
 # sc_logout()
+check_drop_down()
 file.close()
 
 
