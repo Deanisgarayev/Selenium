@@ -138,10 +138,36 @@ def check_drop_down():
     click_form.send_keys('Denmark')
     click_drop.send_keys(Keys.ENTER)
 
+#Oops! This page doesn’t exist.
+def check_input_fields():
+    driver.get('https://www.lambdatest.com/selenium-ptayground/simple-form-demo')
+    driver.maximize_window()
+    sleep(1)
+    form1_text = driver.find_element(By.XPATH,'')
+    form1_label = driver.find_element(By.XPATH,'')
+    form1_button = driver.find_element(By.XPATH,'')
+
+    form2_text1 = driver.find_element(By.XPATH,'')
+    form2_text2 = driver.find_element(By.XPATH,'')
+    form2_label = driver.find_element(By.XPATH,'')
+    form2_button = driver.find_element(By.XPATH,'')
+
+    form1_text.send_keys("Hello")
+    form1_button.click()
+    assert "Hello" == form1_label.text, "Form 1 is failed"
+    file.write("Form 1 is ok")
+
+    form2_text1.send_keys(13)
+    form2_text2.send_keys(4)
+    form2_button.click()
+    assert 13+4 == int(form2_label.text), "Form 2 is failed"
+    file.write("Form 2 is ok")
+
 # check_check_box()
 # check_radio_button()
 # check_buttons()
 # check_date_picker()
 # check_slider()
-check_drop_down()
+# check_drop_down()
+check_input_fields()
 file.close()
