@@ -163,11 +163,28 @@ def check_input_fields():
     assert 13+4 == int(form2_label.text), "Form 2 is failed"
     file.write("Form 2 is ok")
 
+#Oops! This page doesn’t exist.
+def check_iframe():
+    driver.get('https://www.lambdatest.com/selenium-ptayground/iframe-demo')
+    driver.maximize_window()
+    sleep(1)
+    iframe = driver.find_element(By.XPATH,'//*[@id="iframe1"]')
+    driver.switch_to.frame(iframe)
+    lon = driver.find_element(By.XPATH,'//div[@id="__next"]/div/div[2]')
+    sleep(1)
+    lon.send_keys(Keys.CONTROL + "a")
+    lon.send_keys(Keys.DELETE)
+    bold_button_iframe = driver.find_element(By.XPATH,'//*[@id="__next"]/div/div[1]/button[1]')
+    bold_button_iframe.click()
+    lon.send_keys("New message!")
+
+
 # check_check_box()
 # check_radio_button()
 # check_buttons()
 # check_date_picker()
 # check_slider()
 # check_drop_down()
-check_input_fields()
+# check_input_fields()
+check_iframe()
 file.close()
