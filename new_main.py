@@ -4,6 +4,7 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver import Keys, ActionChains
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 
 file = open("logs.txt","w")
 
@@ -177,6 +178,18 @@ def check_iframe():
     bold_button_iframe = driver.find_element(By.XPATH,'//*[@id="__next"]/div/div[1]/button[1]')
     bold_button_iframe.click()
     lon.send_keys("New message!")
+
+# def check_exception():
+#     try:
+#         element = driver.find_element(By.XPATH, "my_element")  # осуществляем поиск элемента
+#         # element.click()
+#     except NoSuchElementException: (
+#         print("Получили NoSuchElementException"))
+#     sleep(5)
+#     driver.refresh()  # обновление страницы
+#     sleep(5)
+#     element = driver.find_element(By.XPATH, "my_element")
+#     element.click()
 
 
 # check_check_box()
